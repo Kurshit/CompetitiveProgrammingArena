@@ -1,4 +1,4 @@
-package com.codeforces.contests.div3.may719;
+package com.kurshit.math.standardproblems;
 
 import java.util.Scanner;
 
@@ -42,7 +42,7 @@ import java.util.Scanner;
   */
 
 
-public class ProblemB {
+public class CountSameDigitsNumber {
 
 	public static void main(String[] args) {
 		
@@ -52,10 +52,9 @@ public class ProblemB {
 		
 		while(T-- > 0) {
 			int N = sc.nextInt();
-			countOrinaryNumberEditorialApproach(N);
-			//System.out.println(count(N));
-			//System.out.println(countOrinaryNumber(N));		
-			
+			System.out.println(count(N));
+			System.err.println(countOrinaryNumber(N));
+			System.out.println();
 		}
 		
 		
@@ -90,52 +89,6 @@ public class ProblemB {
 	 * 		Just do this pattern for every queried N and keep finding this until this range is <= N
 	 */
 	
-	
-	/*
-	 * Approach : Best one : Maintains order and can be printed all such numbers in seq
-	 * 
-	 * Idea : Pattern is as follwos
-	 * 
-	 * 	1 X 1 = 1	11 X 1 = 11		111 X 1 = 111
-	 * 	1 X 2 = 2   11 X 2 = 22		111 X 2 = 222
-	 *  1 X 3 = 3	11 X 3 = 33		111 X 3 = 333
-	 *  1 X 4 = 4	11 X 4 = 44		111 X 4 = 444
-	 *  1 X 5 = 5	11 X 5 = 55		111 X 5 = 555
-	 *  1 X 6 = 6	11 X 6 = 66		111 X 6 = 666
-	 *  1 X 7 = 7	11 X 7 = 77		111 X 7 = 777
-	 *  1 X 8 = 8	11 X 8 = 88		111 X 8 = 888
-	 *  1 X 9 = 9	11 X 9 = 99		111 X 9 = 999
-	 *  
-	 *  pw - 1 to pw = pw * 10 + 1 -- untill pw <= N
-	 *  
-	 *  for each pw - 
-	 *  	d = 1 to d < = 9
-	 *  
-	 *   	pw * d is the ans
-	 *  
-	 *  
-	 */
-	
-	public static int countOrinaryNumberEditorialApproach(int N) {
-		
-		int result = 0;
-		
-		for(long pw=1; pw <= N; pw = pw * 10 + 1) {
-			
-			for(int d= 1; d <= 9; d++) {
-				
-				if(pw * d <= N) {
-					result++;
-					//System.out.println(pw * d); // Uncomment this to print all ordinary numbers insequence
-				}
-				
-			}
-		}
-		
-		return result;
-	}
-
-	
 	public static int count(int N) {
 		
 		int result = 0;
@@ -146,10 +99,8 @@ public class ProblemB {
 				
 				X = X * 10 + i;
 				
-				if(X <= N) {
-					System.out.println(X);
+				if(X <= N)
 					result++;
-				}
 			}
 		}
 		
@@ -166,14 +117,12 @@ public class ProblemB {
 			
 			for(long num= i; num <= N; ) {
 				
-				//result++;
-				System.out.println(num);
+				result++;				
 				num = (num * 10) + 1;
 			}
 		}
 		
 		return result;
 	}
-	
 
 }
