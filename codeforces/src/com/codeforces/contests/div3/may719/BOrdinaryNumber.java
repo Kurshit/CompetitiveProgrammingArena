@@ -42,7 +42,7 @@ import java.util.Scanner;
   */
 
 
-public class ProblemB {
+public class BOrdinaryNumber {
 
 	public static void main(String[] args) {
 		
@@ -52,13 +52,11 @@ public class ProblemB {
 		
 		while(T-- > 0) {
 			int N = sc.nextInt();
-			countOrinaryNumberEditorialApproach(N);
+			System.out.println(countOrinaryNumberEditorialApproach(N));
 			//System.out.println(count(N));
 			//System.out.println(countOrinaryNumber(N));		
-			
+
 		}
-		
-		
 		
 		sc.close();
 
