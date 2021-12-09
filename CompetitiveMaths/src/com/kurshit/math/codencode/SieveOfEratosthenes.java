@@ -9,6 +9,8 @@ public class SieveOfEratosthenes {
 	/*
 	 * In the end, we would be left with isPrime array whose values 0 would indicate non prime and 1 would indicate prime
 	 * number. Also, primeNumbers array will have all the prime numbers upto N
+	 *
+	 * TC : O(N log (log N))
 	 */
 	
 	public static void main(String[] args) {
@@ -23,18 +25,19 @@ public class SieveOfEratosthenes {
 	
 	boolean[] isPrime;  // marked true are prime
 	List<Integer> primeNumbers;
-	
+
+	/*
+		TC : O(N log(log N))
+	 */
+
 	public void sieve(int N) {
 		isPrime = new boolean[N + 1];
 		primeNumbers = new ArrayList<>();
-		
-		isPrime[0] = false;
-		isPrime[1] = false;
-		
+			
 		Arrays.fill(isPrime, true);
 		isPrime[0] = false;
 		isPrime[1] = false;
-		for(int i =2; i * i <= N; i++) {			
+		for(int i =2; i * i <= N; i++) {			// check if i is prime or not. Would not be prime of already marked by its multiple
 			if(isPrime[i]) {  // if given number is prime
 				for( int j = i*i ; j <= N; j +=i) {
 					isPrime[j] = false;		// mark all multiple of given prime number as 0 - composite numbers

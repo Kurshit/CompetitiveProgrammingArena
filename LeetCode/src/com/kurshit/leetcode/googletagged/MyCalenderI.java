@@ -1,5 +1,7 @@
 package com.kurshit.leetcode.googletagged;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 /*
@@ -27,18 +29,20 @@ import java.util.TreeMap;
  *
  */
 
-public class CalenderI {
+public class MyCalenderI {
 	
 	//Keeps start and end
 	TreeMap<Integer, Integer> bookingsMap = new TreeMap<>();
+
+	List<int[]> books;
 	
-	public CalenderI() {
-		
+	public MyCalenderI() {
+		books = new ArrayList<>();
 	}
 	
 	public static void main(String[] args) {
 		
-		CalenderI c = new CalenderI();
+		MyCalenderI c = new MyCalenderI();
 //		System.out.println("Test cases 1");
 //		System.out.println("Should be True " + c.hasConflicts(10, 20));
 //		System.out.println("Should be False " + c.hasConflicts(15, 25));
@@ -46,13 +50,16 @@ public class CalenderI {
 		
 		System.out.println("Test cases 1");
 		System.out.println("Should be True " + c.hasConflicts(37, 50));
+		System.out.println("Should be True " + c.book(37, 50));
 		System.out.println("Should be False " + c.hasConflicts(33, 50));
+		System.out.println("Should be False " + c.book(33, 50));
 		System.out.println("Should be True " + c.hasConflicts(20, 30));
+		System.out.println("Should be True " + c.book(20, 30));
 		
 		System.out.println();
 		System.out.println("Test cases 2");
 		System.out.println();
-		CalenderI c1 = new CalenderI();
+		MyCalenderI c1 = new MyCalenderI();
 		System.out.println("Should be True " + c1.hasConflicts(47, 50));
 		System.out.println("Should be True " + c1.hasConflicts(33, 41));
 		System.out.println("Should be False " + c1.hasConflicts(39, 45));
@@ -87,5 +94,16 @@ public class CalenderI {
 		}
 		
 		return false;
+	}
+
+	public boolean book(int start, int end ) {
+
+		for(int[] book : books) {
+			if(Math.max(book[0], start) < Math.min(book[1], end)) {
+				return false;
+			}
+		}
+		books.add(new int[] {start, end});
+		return true;
 	}
 }

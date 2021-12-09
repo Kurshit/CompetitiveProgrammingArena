@@ -1,4 +1,4 @@
-package com.kurshit.cpbook.chapter4.section42;
+package com.kurshit.cpbook.chapter4.graphs.section42;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Problem Source : https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=3053
  * 
  * Problem : In graph theory, a node X dominates a node Y if every path
-			from the predefined start node to Y must go through X. If
+			from the predefined (mind it) start node to Y must go through X. If
 			Y is not reachable from the start node then node Y does not
 			have any dominator. By definition, every node reachable from
 			the start node dominates itself. In this problem, you will be
@@ -20,6 +20,8 @@ import java.util.Scanner;
 			As an example, for the graph shown right, 3 dominates 4
 			since all the paths from 0 to 4 must pass through 3. 1 doesn’t
 			dominate 3 since there is a path 0-2-3 that doesn’t include 1.
+
+			Note : Path always starts from 0 here
 
 			Input
 			The first line of input will contain T (≤ 100) denoting the
@@ -35,18 +37,26 @@ import java.util.Scanner;
 			otherwise output ‘N’. Cell (A, B) means cell at A-th row and B-th column. Surround the output with
 			‘|’, ‘+’ and ‘-’ to make it more legible. Look at the samples for exact format
 
-
+			//The diagram of this graph is given in book - Page No : 123
 			2
 			5
 			0 1 1 0 0
 			0 0 0 1 0
 			0 0 0 1 0
 			0 0 0 0 1
-			0 0 0 0 0
+			0 0 0 0 ]
 			1
 			1
 			Sample Output
-			Case 1:
+			Case 1: //I am using this output for simplicity and not involving +
+
+				[1, 1, 1, 1, 1]
+				[0, 1, 0, 0, 0]  // cell(1,3) is 0 (N) as 1 does not dominate 3 since there exist another path from 2 to 3. Also, same for cell(2,3)
+				[0, 0, 1, 0, 0]
+				[0, 0, 0, 1, 1]
+				[0, 0, 0, 0, 1]
+
+			*
 			+---------+
 			|Y|Y|Y|Y|Y|
 			+---------+
@@ -102,33 +112,20 @@ public class Dominator {
 
 	}
 
-	public static void dfs(int[][] graph, boolean[] visited, int src, int dest) {
-
-		if(src == dest) {
-			return;
-		}
-
-		visited[src] = true;
-
-		for(int i= 0; i < graph.length; i++) {
-			if(graph[src][i] == 1 && !visited[i]) {
-				dfs(graph,visited, i, dest);
-			}
-		}
-
-	}
-	
 	public static void usingDFS(int[][] graph, int V) {
 		
-		boolean[] visited = new boolean[105];
+		boolean[] visited = new boolean[V];
 		int[][] result = new int[V][V];
 		
-		boolean[] fused = new boolean[105];
+		boolean[] fused = new boolean[V];
 
 		for(int j = 0; j < V; j++)
 			visited[j] = false;
 
 		dfs(graph, visited, 0, -1);
+		//System.out.println("DFS : " + Arrays.toString(fused));
+		//System.out.println("DFS : " + Arrays.toString(visited));
+
 
 		for(int i = 0; i < V; i++) {
 			fused[i] = visited[i];
@@ -140,7 +137,7 @@ public class Dominator {
 				visited[j] = false;
 
 			dfs(graph, visited, 0, i);
-			
+
 			for(int j = 0; j < V; j++) {
 				if(fused[j] && !visited[j])
 					result[i][j] = 1;
@@ -156,19 +153,34 @@ public class Dominator {
 			System.out.println(Arrays.toString(result[i]));
 		}
 	}
-	
+
+	public static void dfs(int[][] graph, boolean[] visited, int src, int dest) {
+
+		if(src == dest) {
+			return;
+		}
+
+		visited[src] = true;
+
+		for(int i= 0; i < graph.length; i++) {
+			if(graph[src][i] == 1 && !visited[i]) {
+				dfs(graph,visited, i, dest);
+			}
+		}
+
+	}
+
 	public static void usingBFS(int[][] graph, int V) {	
 		
-		boolean[] visited = new boolean[105];
+		boolean[] visited = new boolean[V];
 		int[][] result = new int[V][V];
 		
-		boolean[] fused = new boolean[105];
+		boolean[] fused = new boolean[V];
 
 		for(int j = 0; j < V; j++)
 			visited[j] = false;
 
 		bfs(graph, visited, 0, -1);
-
 		for(int i = 0; i < V; i++) {
 			fused[i] = visited[i];
 		}
@@ -178,8 +190,7 @@ public class Dominator {
 			for(int j = 0; j < V; j++)
 				visited[j] = false;
 
-			dfs(graph, visited, 0, i);
-			
+			bfs(graph, visited, 0, i);
 			for(int j = 0; j < V; j++) {
 				if(fused[j] && !visited[j])
 					result[i][j] = 1;
@@ -204,17 +215,18 @@ public class Dominator {
 		while( !q.isEmpty()) {
 			
 			src = q.poll();
-			
+
 			if(src == dest) {
-				return;
+				//IMP : Needs to be continued for next iterations than returning
+				continue;
 			}
-			
+
 			visited[src] = true;
-						
+
 			
 			for(int i= 0; i < graph.length; i++) {
 				if(graph[src][i] == 1 && !visited[i]) {
-					q.offer(i);					
+					q.offer(i);
 				}
 			}
 		}		
